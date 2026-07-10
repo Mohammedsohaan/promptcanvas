@@ -1,26 +1,29 @@
 # PromptCanvas
 
-> An AI-powered product planning workspace.
+> From Idea to Product Blueprint.
 
-PromptCanvas helps founders, developers, students, and product teams transform raw ideas into structured software blueprints before development begins. 
+PromptCanvas is an AI-powered product planning workspace that helps founders, developers, students, and product teams transform raw ideas into structured software blueprints before development begins.
 
 ## Tech Stack
-- Framework: Next.js (App Router)
-- Language: TypeScript
-- Styling: Tailwind CSS
-- Linter: ESLint
+
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- ESLint
 
 ## Folder Structure
-- `app/`: Next.js App Router structure and pages
-- `components/`: Reusable React components
-- `features/`: Domain-specific modular functionality
-- `hooks/`: Custom React hooks
-- `lib/`: Utility functions and third-party wrappers
-- `services/`: API integration and external services
-- `types/`: TypeScript type definitions
-- `styles/`: Global styles and Tailwind configuration
-- `public/`: Static assets
-- `docs/`: Product vision, roadmap, features, and changelog
+
+- `app/`
+- `components/`
+- `features/`
+- `hooks/`
+- `lib/`
+- `services/`
+- `styles/`
+- `types/`
+- `public/`
+- `docs/`
 
 ## Version
+
 v0.1.0
