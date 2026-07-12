@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+@theme {
+  --color-background: #050505;
+  --color-foreground: #fafafa;
+  
+  /* Accent colors - subtle premium */
+  --color-primary: #ffffff;
+  --color-primary-foreground: #000000;
+  
+  --color-muted: #171717;
+  --color-muted-foreground: #a3a3a3;
+  
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-hover: rgba(255, 255, 255, 0.2);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

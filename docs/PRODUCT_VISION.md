@@ -1,65 +1,138 @@
-# Product Vision: PromptCanvas
+# PromptCanvas
 
-PromptCanvas is an AI-powered product planning workspace that helps founders, developers, students, and product teams transform raw ideas into structured software blueprints before development begins.
+**Tagline:** From Idea to Product Blueprint.
 
-This document will outline the long-term vision, target audience, and core value proposition of PromptCanvas.
+---
+
+## Vision
+
+PromptCanvas helps founders, developers, students, and product teams turn software ideas into clear product blueprints before writing code.
+
+The goal is to help people think through their product before they start building it.
+
+---
 
 ## Mission
 
 Help builders think before they build.
 
-PromptCanvas exists to reduce confusion during software development by encouraging structured planning before writing code. Instead of jumping directly into development, users are guided through a clear process that transforms an idea into a well-defined product blueprint.
+PromptCanvas reduces confusion during software development by encouraging structured planning before coding begins.
+
+---
 
 ## North Star
 
-Every successful software product should begin with a clear plan before a single line of code is written.
+Every successful software product starts with a clear plan before the first line of code is written.
 
-## Not For
+---
 
-PromptCanvas is not a project management tool.
+## What PromptCanvas Is
 
-It is not a code editor.
+PromptCanvas is a product planning workspace.
 
-It is not a task management application.
+It helps users organize ideas, define problems, identify users, plan features, and build a clear roadmap before development starts.
 
-It is not another AI chatbot.
+---
 
-Its only purpose is to help users transform ideas into clear product blueprints before development begins.
+## What PromptCanvas Is Not
 
-## Elevator Pitch
+PromptCanvas is **not**:
 
-PromptCanvas is an AI-powered workspace that helps founders, developers, and students plan software products before they start building. Instead of jumping straight into coding, PromptCanvas guides users through a structured process that generates a clear product blueprint, helping teams build faster with fewer mistakes.
+- A project management tool
+- A code editor
+- A task manager
+- An AI chatbot
+
+Its only purpose is to help users create better software plans.
+
+---
+
+## Target Users
+
+### Students
+
+Students who want to plan software projects before building them.
+
+### Developers
+
+Developers who want a structured way to organize product ideas.
+
+### Freelancers
+
+Freelancers who need a clear project plan before starting client work.
+
+### Startup Founders
+
+Founders who want to validate ideas before investing time and money.
+
+### Product Managers
+
+People responsible for planning products, features, and roadmaps.
+
+---
 
 ## Core Values
 
-### 1. Clarity Over Complexity
+### Clarity Over Complexity
 
-Every feature should make product planning simpler, not more complicated.
+Keep planning simple and easy to understand.
 
-### 2. Think Before Building
+### Think Before Building
 
-Planning is as important as coding.
+Planning is just as important as coding.
 
-### 3. AI Assists, Humans Decide
+### AI Assists, Humans Decide
 
-AI should guide users, but important product decisions remain with the builder.
+AI should help users, not replace their decisions.
 
-### 4. Build With Purpose
+### Build With Purpose
 
-Every project should solve a real problem.
+Every product should solve a real problem.
 
-### 5. Quality Over Quantity
+### Quality Over Quantity
 
-A well-planned product is better than ten unfinished ideas.
+One well-planned product is better than ten unfinished ideas.
+
+---
 
 ## Why PromptCanvas Matters
 
-Building software is expensive, but building the wrong software is even more expensive.
+Many software projects fail because planning is skipped.
 
-PromptCanvas exists to reduce wasted time by helping builders validate ideas, organize their thoughts, and create a structured development plan before writing code.
+PromptCanvas helps users organize ideas, define requirements, and create a clear product blueprint before development begins.
 
-A few minutes spent planning can save weeks of unnecessary development.
+A few minutes of planning can save weeks of unnecessary work.
+
+---
+
+## Elevator Pitch
+
+PromptCanvas is an AI-powered workspace that helps people plan software products before writing code.
+
+Instead of jumping straight into development, users follow a structured workflow that turns ideas into complete product blueprints.
+
+---
 
 ## Motto
 
-Plan Better. Build Smarter.
+**Plan Better. Build Smarter.**
+
+---
+
+## Product Wizard Steps
+
+Step 1 — Product Name
+
+Step 2 — Problem Statement
+
+Step 3 — Target Users
+
+Step 4 — Goals
+
+Step 5 — Core Features
+
+Step 6 — MVP
+
+Step 7 — Review
+
+Step 8 — Generate Blueprint
