@@ -7,38 +7,60 @@ export function Hero() {
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
-  const planningNodes = [
-    { id: "idea", label: "Idea", desc: "Core concept", x: 200, y: 120, delay: 0 },
-    { id: "problem", label: "Problem", desc: "User pain points", x: 120, y: 300, delay: 1.2 },
-    { id: "users", label: "Target Users", desc: "Target audience", x: 250, y: 480, delay: 2.5 },
-    { id: "goals", label: "Goals", desc: "Success metrics", x: 450, y: 620, delay: 4.0 },
-    { id: "features", label: "Features", desc: "Scope mapping", x: 750, y: 550, delay: 5.5 },
-    { id: "mvp", label: "MVP", desc: "Version 1 rollout", x: 880, y: 350, delay: 7.0 },
-    { id: "blueprint", label: "Blueprint", desc: "Architecture", x: 500, y: 750, delay: 8.5 },
+  const duration = 16; // Slower, premium cycle duration
+  const fadeOutStart = 13.5;
+  const fadeOutEnd = 14.5;
+
+  const nodes = [
+    { id: "idea", label: "Idea", desc: "Core concept", x: 200, y: 120, appearAt: 0, activeDuration: 1.5 },
+    { id: "problem", label: "Problem", desc: "User pain points", x: 120, y: 300, appearAt: 1.5, activeDuration: 1.5 },
+    { id: "users", label: "Target Users", desc: "Target audience", x: 250, y: 480, appearAt: 3.0, activeDuration: 1.5 },
+    { id: "goals", label: "Goals", desc: "Success metrics", x: 450, y: 620, appearAt: 4.5, activeDuration: 1.5 },
+    { id: "features", label: "Features", desc: "Scope mapping", x: 750, y: 550, appearAt: 6.0, activeDuration: 1.5 },
+    { id: "mvp", label: "MVP", desc: "Version 1 rollout", x: 880, y: 350, appearAt: 7.5, activeDuration: 1.5 },
+    { id: "blueprint", label: "Blueprint", desc: "Architecture", x: 500, y: 750, appearAt: 9.0, activeDuration: 4.5 }, // Longer hold
   ];
 
-  const pathData = "M 200 120 L 120 300 L 250 480 L 450 620 L 750 550 L 880 350 L 500 750 L 500 1000";
+  const segments = [
+    { x1: 200, y1: 120, x2: 120, y2: 300, drawStart: 0.5, drawEnd: 1.5 },
+    { x1: 120, y1: 300, x2: 250, y2: 480, drawStart: 2.0, drawEnd: 3.0 },
+    { x1: 250, y1: 480, x2: 450, y2: 620, drawStart: 3.5, drawEnd: 4.5 },
+    { x1: 450, y1: 620, x2: 750, y2: 550, drawStart: 5.0, drawEnd: 6.0 },
+    { x1: 750, y1: 550, x2: 880, y2: 350, drawStart: 6.5, drawEnd: 7.5 },
+    { x1: 880, y1: 350, x2: 500, y2: 750, drawStart: 8.0, drawEnd: 9.0 },
+  ];
 
-  const getChildAnimation = (delaySec: number) => {
-    const duration = 14;
-    const fadeOutStart = 13;
-    
-    if (delaySec === 0) {
-      return {
-        opacity: [0, 1, 1, 0],
-        scale: [0.95, 1, 1, 0.95],
-        borderColor: ["rgba(255,255,255,0)", "rgba(255,255,255,0.3)", "rgba(255,255,255,0.05)", "rgba(255,255,255,0)"],
-        boxShadow: ["0 0 0px rgba(255,255,255,0)", "0 0 30px rgba(255,255,255,0.15)", "0 0 10px rgba(255,255,255,0.02)", "0 0 0px rgba(255,255,255,0)"],
-        times: [0, 0.5/duration, fadeOutStart/duration, 1]
-      };
-    }
-  
+  const getNodeAnimation = (appearAt: number, activeDuration: number) => {
     return {
-      opacity: [0, 0, 1, 1, 0],
-      scale: [0.95, 0.95, 1, 1, 0.95],
-      borderColor: ["rgba(255,255,255,0)", "rgba(255,255,255,0)", "rgba(255,255,255,0.4)", "rgba(255,255,255,0.1)", "rgba(255,255,255,0)"],
-      boxShadow: ["0 0 0px rgba(255,255,255,0)", "0 0 0px rgba(255,255,255,0)", "0 0 30px rgba(255,255,255,0.2)", "0 0 10px rgba(255,255,255,0.02)", "0 0 0px rgba(255,255,255,0)"],
-      times: [0, delaySec/duration, (delaySec + 0.5)/duration, fadeOutStart/duration, 1]
+      opacity:    [0, 0, 1, 1, 1, 0, 0],
+      scale:      [0.95, 0.95, 1.05, 1, 1, 0.95, 0.95], // Pulse larger when active
+      borderColor:["rgba(255,255,255,0)", "rgba(255,255,255,0)", "rgba(255,255,255,0.6)", "rgba(255,255,255,0.15)", "rgba(255,255,255,0.15)", "rgba(255,255,255,0)", "rgba(255,255,255,0)"],
+      boxShadow:  ["0 0 0px rgba(255,255,255,0)", "0 0 0px rgba(255,255,255,0)", "0 0 30px rgba(255,255,255,0.25)", "0 0 10px rgba(255,255,255,0.05)", "0 0 10px rgba(255,255,255,0.05)", "0 0 0px rgba(255,255,255,0)", "0 0 0px rgba(255,255,255,0)"],
+      times: [
+        0, 
+        appearAt / duration, 
+        (appearAt + 0.4) / duration, 
+        Math.min((appearAt + activeDuration), fadeOutStart) / duration, 
+        fadeOutStart / duration, 
+        fadeOutEnd / duration, 
+        1
+      ]
+    };
+  };
+
+  const getLineAnimation = (drawStart: number, drawEnd: number) => {
+    return {
+      pathLength: [0, 0, 1, 1, 1, 0, 0],
+      opacity:    [1, 1, 1, 0.3, 0.3, 0, 0], // Dims after drawing to create trailing glow
+      times: [
+        0, 
+        drawStart / duration, 
+        drawEnd / duration, 
+        Math.min((drawEnd + 1.0), fadeOutStart) / duration, 
+        fadeOutStart / duration, 
+        fadeOutEnd / duration, 
+        1
+      ]
     };
   };
 
@@ -47,7 +69,7 @@ export function Hero() {
       
       {/* Background Canvas Wrapper */}
       <div 
-        className="absolute inset-0 z-0 pointer-events-none opacity-[0.10] flex items-center justify-center"
+        className="absolute inset-0 z-0 pointer-events-none opacity-[0.15] flex items-center justify-center"
         style={{
           maskImage: "radial-gradient(ellipse at center, black 20%, transparent 80%)",
           WebkitMaskImage: "radial-gradient(ellipse at center, black 20%, transparent 80%)"
@@ -67,36 +89,41 @@ export function Hero() {
           className="relative w-[1000px] h-[800px]"
           animate={{ scale: [1, 1, 1.02, 1, 1] }}
           transition={{ 
-            duration: 14, 
-            times: [0, 10/14, 11.5/14, 13/14, 1], // Breathing effect between 10s and 13s
+            duration, 
+            times: [0, 9.0/16, 11.25/16, 13.5/16, 1], // Breathing effect between 9s and 13.5s
             repeat: Infinity, 
             ease: "easeInOut" 
           }}
         >
           {/* SVG Connections */}
           <svg className="absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 1000 800" fill="none">
-            {/* Animated drawing path */}
-            <motion.path 
-              d={pathData}
-              stroke="rgba(255,255,255,0.5)"
-              strokeWidth="2"
-              strokeDasharray="6 6"
-              animate={{ 
-                pathLength: [0, 1, 1, 0],
-                opacity: [0, 1, 1, 0]
-              }}
-              transition={{ 
-                duration: 14,
-                times: [0, 10/14, 13/14, 1], // Draws over 10s, holds until 13s, fades out by 14s
-                repeat: Infinity,
-                ease: "easeInOut" 
-              }}
-            />
+            {segments.map((seg, index) => {
+              const anim = getLineAnimation(seg.drawStart, seg.drawEnd);
+              return (
+                <motion.path 
+                  key={`line-${index}`}
+                  d={`M ${seg.x1} ${seg.y1} L ${seg.x2} ${seg.y2}`}
+                  stroke="rgba(255,255,255,0.8)" // Brighter base stroke
+                  strokeWidth="2"
+                  strokeDasharray="6 6"
+                  animate={{
+                    pathLength: anim.pathLength,
+                    opacity: anim.opacity
+                  }}
+                  transition={{ 
+                    duration,
+                    times: anim.times,
+                    repeat: Infinity,
+                    ease: ["linear", "easeInOut", "easeOut", "linear", "easeIn", "linear"]
+                  }}
+                />
+              );
+            })}
           </svg>
 
           {/* Workflow Node Cards */}
-          {planningNodes.map((node) => {
-            const anim = getChildAnimation(node.delay);
+          {nodes.map((node) => {
+            const anim = getNodeAnimation(node.appearAt, node.activeDuration);
             return (
               <div
                 key={node.id}
@@ -112,10 +139,10 @@ export function Hero() {
                     boxShadow: anim.boxShadow
                   }}
                   transition={{
-                    duration: 14,
+                    duration,
                     times: anim.times,
                     repeat: Infinity,
-                    ease: "easeOut"
+                    ease: ["linear", "easeOut", "easeInOut", "linear", "easeIn", "linear"]
                   }}
                 >
                   <span className="text-xs font-bold text-white tracking-widest uppercase">{node.label}</span>
