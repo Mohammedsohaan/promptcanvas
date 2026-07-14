@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatedSection } from "@/components/ui/animated-section";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, type Easing } from "framer-motion";
 import { useRef } from "react";
 
 export function ProductPreview() {
@@ -34,7 +34,7 @@ export function ProductPreview() {
         fadeOutEnd / duration, 
         1
       ],
-      ease: ["linear", "easeOut", "linear", "easeIn", "linear"],
+      ease: ["linear", "easeOut", "linear", "easeIn", "linear"] as Easing[],
       repeat: Infinity
     }
   });
@@ -76,7 +76,7 @@ export function ProductPreview() {
               duration,
               times: [0, 9.0/16, 9.6/16, 13.5/16, 14.5/16, 1],
               repeat: Infinity,
-              ease: ["linear", "easeOut", "easeInOut", "easeIn", "linear"]
+              ease: ["linear", "easeOut", "easeInOut", "easeIn", "linear"] as Easing[]
             }}
           >
             {/* Mac-like Top Bar */}
