@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,10 +18,16 @@ interface FormField {
   autoComplete?: string;
 }
 
+export interface AuthFormResult {
+  type: "success" | "error";
+  message: string;
+  redirect?: string;
+}
+
 interface AuthFormProps {
   fields: FormField[];
   submitLabel: string;
-  onSubmit?: (data: Record<string, string>) => void;
+  onSubmit?: (data: Record<string, string>) => Promise<AuthFormResult | void> | void;
 }
 
 /* ─────────── Feedback Banner ─────────── */
@@ -120,6 +127,7 @@ PasswordInput.displayName = "PasswordInput";
 /* ─────────── Main Form ─────────── */
 
 export function AuthForm({ fields, submitLabel, onSubmit }: AuthFormProps) {
+  const router = useRouter();
   const [values, setValues] = React.useState<Record<string, string>>(
     Object.fromEntries(fields.map((f) => [f.name, ""]))
   );
@@ -165,23 +173,29 @@ export function AuthForm({ fields, submitLabel, onSubmit }: AuthFormProps) {
 
     if (Object.keys(newErrors).length > 0) return;
 
-    // Simulate loading state (placeholder for future Supabase integration)
     setIsLoading(true);
     setFeedback(null);
 
-    // Placeholder: will be replaced with real Supabase auth in next milestone
-    if (onSubmit) {
-      onSubmit(values);
-    } else {
-      // Demo loading state
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setFeedback({
-        type: "success",
-        message: "Ready for Supabase integration.",
-      });
-    }
+    try {
+      if (onSubmit) {
+        const result = await onSubmit(values);
+        if (result) {
+          setFeedback({ type: result.type, message: result.message });
 
-    setIsLoading(false);
+          // Redirect after a brief delay on success (if redirect path provided)
+          if (result.type === "success" && result.redirect) {
+            setTimeout(() => router.push(result.redirect!), 2000);
+          }
+        }
+      }
+    } catch {
+      setFeedback({
+        type: "error",
+        message: "An unexpected error occurred. Please try again.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
