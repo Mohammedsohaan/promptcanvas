@@ -35,11 +35,26 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isProtectedRoute = request.nextUrl.pathname.startsWith('/dashboard');
+  const pathname = request.nextUrl.pathname;
+
+  // Protect: /dashboard, /projects, /workspace, /settings
+  const protectedPrefixes = ['/dashboard', '/projects', '/workspace', '/settings'];
+  const isProtectedRoute = protectedPrefixes.some((prefix) => pathname.startsWith(prefix));
+
+  // Public auth routes (where users should NOT be logged in)
+  const isAuthRoute = pathname === '/login' || pathname === '/signup';
 
   if (!user && isProtectedRoute) {
+    // Unauthenticated user visiting protected route -> redirect to /login
     const url = request.nextUrl.clone();
     url.pathname = '/login';
+    return NextResponse.redirect(url);
+  }
+
+  if (user && isAuthRoute) {
+    // Authenticated user visiting /login or /signup -> redirect to /dashboard
+    const url = request.nextUrl.clone();
+    url.pathname = '/dashboard';
     return NextResponse.redirect(url);
   }
 

@@ -49,6 +49,7 @@ export async function signUp({ fullName, email, password }: SignupData): Promise
     email,
     password,
     options: {
+      emailRedirectTo: "http://localhost:3000/auth/callback",
       data: {
         full_name: fullName,
       },
@@ -95,7 +96,7 @@ export interface LoginData {
 export async function signIn({ email, password }: LoginData): Promise<AuthResult> {
   const supabase = createClient();
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
