@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: "A premium workspace to plan software products before writing code.",
 };
 
+import { Toaster } from "sonner";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,6 +20,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.className} min-h-screen bg-[#050505] text-[#fafafa] antialiased selection:bg-white/20 selection:text-white`}>
         {children}
+        <Toaster theme="dark" position="bottom-right" />
       </body>
     </html>
   );
