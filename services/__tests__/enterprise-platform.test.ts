@@ -25,7 +25,7 @@ describe('Platform v4.0 Enterprise Intelligent Engineering Platform', () => {
   beforeEach(() => {
     eventBus = PlatformEventBus.getInstance();
     // Clear subscribers
-    (eventBus as any)['subscribers'] = new Map();
+    eventBus.clearAllListeners();
     
     portfolioEngine = new PortfolioHealthEngine();
     orgEngine = new OrganizationHealthEngine();

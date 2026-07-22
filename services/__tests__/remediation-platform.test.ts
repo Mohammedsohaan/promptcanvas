@@ -33,7 +33,7 @@ describe('Platform v3.6 Enterprise Auto Remediation', () => {
   beforeEach(() => {
     eventBus = PlatformEventBus.getInstance();
     // Clear subscribers to avoid cross-test contamination
-    (eventBus as any)['subscribers'] = new Map();
+    eventBus.clearAllListeners();
     
     decisionEngine = new DecisionEngine();
     policyEngine = new PolicyEngine();

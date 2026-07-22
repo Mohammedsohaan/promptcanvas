@@ -25,7 +25,7 @@ describe("Platform v3.5 - Enterprise Cost & FinOps Intelligence", () => {
   const period: BillingPeriod = { start: "2026-07-01", end: "2026-07-31" };
 
   beforeEach(() => {
-    (PlatformEventBus.getInstance() as unknown as Record<string, unknown>)["subscribers"] = {};
+    PlatformEventBus.getInstance().clearAllListeners();
   });
 
   describe("Providers & Connectors", () => {

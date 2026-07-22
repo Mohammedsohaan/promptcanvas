@@ -17,7 +17,7 @@ let mockRuntime: RuntimeModel;
 
 describe("Platform v3.3 - AI Runtime Intelligence", () => {
   beforeEach(() => {
-    PlatformEventBus.getInstance()["subscribers"] = {};
+    PlatformEventBus.getInstance().clearAllListeners();
     mockRuntime = {
       id: "prod-env",
       provider: "OpenTelemetry",

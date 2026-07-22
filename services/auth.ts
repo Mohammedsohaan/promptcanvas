@@ -45,11 +45,13 @@ function getReadableError(message: string): string {
 export async function signUp({ fullName, email, password }: SignupData): Promise<AuthResult> {
   const supabase = createClient();
 
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      emailRedirectTo: "http://localhost:3000/auth/callback",
+      emailRedirectTo: `${appUrl}/auth/callback`,
       data: {
         full_name: fullName,
       },

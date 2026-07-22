@@ -22,7 +22,7 @@ describe('Platform v3.9 Controlled Production Executors', () => {
   beforeEach(() => {
     eventBus = PlatformEventBus.getInstance();
     // Clear subscribers
-    (eventBus as any)['subscribers'] = new Map();
+    eventBus.clearAllListeners();
     
     authEngine = new ExecutionAuthorizationEngine();
     planner = new ExecutionPlanner();

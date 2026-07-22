@@ -26,7 +26,7 @@ describe('Platform v3.7 Enterprise Compliance & Governance', () => {
   beforeEach(() => {
     eventBus = PlatformEventBus.getInstance();
     // Clear subscribers to avoid cross-test contamination
-    (eventBus as any)['subscribers'] = new Map();
+    eventBus.clearAllListeners();
     
     complianceEngine = new ComplianceEngine();
     governanceEngine = new GovernanceEngine();

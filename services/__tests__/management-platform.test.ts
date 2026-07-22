@@ -26,7 +26,7 @@ describe('Platform v3.8 Enterprise AI Engineering Manager', () => {
   beforeEach(() => {
     eventBus = PlatformEventBus.getInstance();
     // Clear subscribers
-    (eventBus as any)['subscribers'] = new Map();
+    eventBus.clearAllListeners();
     
     healthEngine = new EngineeringHealthEngine();
     debtEngine = new TechnicalDebtEngine();

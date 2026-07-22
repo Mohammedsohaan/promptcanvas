@@ -32,4 +32,8 @@ export class PlatformEventBus {
   public unsubscribe(event: string, callback: EventCallback): void {
     this.emitter.off(event, callback);
   }
+
+  public clearAllListeners(): void {
+    this.emitter.removeAllListeners();
+  }
 }

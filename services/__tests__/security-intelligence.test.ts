@@ -21,7 +21,7 @@ let mockSecurity: SecurityModel;
 
 describe("Platform v3.4 — Enterprise Security Intelligence", () => {
   beforeEach(() => {
-    PlatformEventBus.getInstance()["subscribers"] = {};
+    PlatformEventBus.getInstance().clearAllListeners();
     mockSecurity = {
       id: "repo-1",
       provider: "GitHub",

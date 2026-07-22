@@ -33,8 +33,8 @@ const mockPipeline: PipelineModel = {
 };
 
 describe("Platform v3.2 - AI CI/CD Intelligence", () => {
-  beforeAll(() => {
-    PlatformEventBus.getInstance()["subscribers"] = {};
+  beforeEach(() => {
+    PlatformEventBus.getInstance().clearAllListeners();
   });
 
   describe("Providers & Connectors", () => {

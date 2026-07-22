@@ -32,9 +32,9 @@ const mockDiff: RepositoryDiff = {
 };
 
 describe("Platform v3.1 - AI Pull Request Intelligence", () => {
-  beforeAll(() => {
+  beforeEach(() => {
     // Reset event bus listeners
-    PlatformEventBus.getInstance()["subscribers"] = {};
+    PlatformEventBus.getInstance().clearAllListeners();
   });
 
   describe("Integration & Providers", () => {
