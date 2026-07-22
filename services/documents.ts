@@ -1,5 +1,6 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { createClient as createBrowserClient } from "@/lib/supabase/client";
+import { documentRepository } from "@/repositories/supabase-document-repository";
+import { Document, DocumentType, DocumentStatus, CreateDocumentInput } from "@/types/document";
 
 /* ─────────── Types ─────────── */
 
@@ -38,38 +39,61 @@ export interface DocumentResult<T> {
   data?: T;
 }
 
+/**
+ * Helper to map domain Document to DbDocument representation for backwards API compatibility
+ */
+function mapDomainToDbDocument(doc: Document): DbDocument {
+  return {
+    id: doc.id,
+    project_id: doc.projectId,
+    created_at: doc.createdAt,
+    updated_at: doc.updatedAt,
+    title: doc.title,
+    type: doc.type,
+    content: (doc.content as Record<string, unknown>) || {},
+    icon: doc.icon,
+    is_favorite: doc.isFavorite,
+    sort_order: doc.sortOrder,
+  };
+}
+
 /* ─────────── Create Document ─────────── */
 
 export async function createDocument(
   documentData: CreateDocumentData,
   supabaseClient?: SupabaseClient
 ): Promise<DocumentResult<DbDocument>> {
-  const supabase = supabaseClient || createBrowserClient();
-
-  const { data, error } = await supabase
-    .from("documents")
-    .insert({
-      project_id: documentData.project_id,
+  try {
+    const input: CreateDocumentInput = {
+      projectId: documentData.project_id,
       title: documentData.title,
-      type: documentData.type,
+      type: documentData.type as DocumentType,
+      status: DocumentStatus.READY,
+      version: 1,
       content: documentData.content || {},
       icon: documentData.icon || "FileText",
-    })
-    .select()
-    .single();
+      isFavorite: false,
+      sortOrder: 0,
+      createdByAi: false,
+      parentDocumentId: null,
+      lastGeneratedAt: null,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
 
-  if (error) {
+    const doc = await documentRepository.saveDocument(input, supabaseClient);
+
+    return {
+      success: true,
+      message: "Document created successfully!",
+      data: mapDomainToDbDocument(doc),
+    };
+  } catch (error: any) {
     return {
       success: false,
-      message: error.message || "Failed to create document. Please try again.",
+      message: error?.message || "Failed to create document. Please try again.",
     };
   }
-
-  return {
-    success: true,
-    message: "Document created successfully!",
-    data: data as DbDocument,
-  };
 }
 
 /* ─────────── Get Documents (by project) ─────────── */
@@ -78,27 +102,19 @@ export async function getDocuments(
   projectId: string,
   supabaseClient?: SupabaseClient
 ): Promise<DocumentResult<DbDocument[]>> {
-  const supabase = supabaseClient || createBrowserClient();
-
-  const { data, error } = await supabase
-    .from("documents")
-    .select("*")
-    .eq("project_id", projectId)
-    .order("sort_order", { ascending: true })
-    .order("updated_at", { ascending: false });
-
-  if (error) {
+  try {
+    const docs = await documentRepository.getProjectDocuments(projectId, supabaseClient);
+    return {
+      success: true,
+      message: "Documents fetched successfully!",
+      data: docs.map(mapDomainToDbDocument),
+    };
+  } catch (error: any) {
     return {
       success: false,
-      message: error.message || "Failed to fetch documents. Please try again.",
+      message: error?.message || "Failed to fetch documents. Please try again.",
     };
   }
-
-  return {
-    success: true,
-    message: "Documents fetched successfully!",
-    data: data as DbDocument[],
-  };
 }
 
 /* ─────────── Get Document By ID ─────────── */
@@ -107,26 +123,25 @@ export async function getDocumentById(
   documentId: string,
   supabaseClient?: SupabaseClient
 ): Promise<DocumentResult<DbDocument>> {
-  const supabase = supabaseClient || createBrowserClient();
-
-  const { data, error } = await supabase
-    .from("documents")
-    .select("*")
-    .eq("id", documentId)
-    .single();
-
-  if (error || !data) {
+  try {
+    const doc = await documentRepository.getDocument(documentId, supabaseClient);
+    if (!doc) {
+      return {
+        success: false,
+        message: "Document not found.",
+      };
+    }
+    return {
+      success: true,
+      message: "Document fetched successfully!",
+      data: mapDomainToDbDocument(doc),
+    };
+  } catch (error: any) {
     return {
       success: false,
       message: error?.message || "Document not found.",
     };
   }
-
-  return {
-    success: true,
-    message: "Document fetched successfully!",
-    data: data as DbDocument,
-  };
 }
 
 /* ─────────── Update Document ─────────── */
@@ -136,27 +151,19 @@ export async function updateDocument(
   updates: UpdateDocumentData,
   supabaseClient?: SupabaseClient
 ): Promise<DocumentResult<DbDocument>> {
-  const supabase = supabaseClient || createBrowserClient();
-
-  const { data, error } = await supabase
-    .from("documents")
-    .update(updates)
-    .eq("id", documentId)
-    .select()
-    .single();
-
-  if (error) {
+  try {
+    const doc = await documentRepository.updateDocument(documentId, updates, supabaseClient);
+    return {
+      success: true,
+      message: "Document updated successfully!",
+      data: mapDomainToDbDocument(doc),
+    };
+  } catch (error: any) {
     return {
       success: false,
-      message: error.message || "Failed to update document. Please try again.",
+      message: error?.message || "Failed to update document. Please try again.",
     };
   }
-
-  return {
-    success: true,
-    message: "Document updated successfully!",
-    data: data as DbDocument,
-  };
 }
 
 /* ─────────── Delete Document ─────────── */
@@ -165,22 +172,16 @@ export async function deleteDocument(
   documentId: string,
   supabaseClient?: SupabaseClient
 ): Promise<DocumentResult<null>> {
-  const supabase = supabaseClient || createBrowserClient();
-
-  const { error } = await supabase
-    .from("documents")
-    .delete()
-    .eq("id", documentId);
-
-  if (error) {
+  try {
+    await documentRepository.deleteDocument(documentId, supabaseClient);
+    return {
+      success: true,
+      message: "Document deleted successfully!",
+    };
+  } catch (error: any) {
     return {
       success: false,
-      message: error.message || "Failed to delete document. Please try again.",
+      message: error?.message || "Failed to delete document. Please try again.",
     };
   }
-
-  return {
-    success: true,
-    message: "Document deleted successfully!",
-  };
 }

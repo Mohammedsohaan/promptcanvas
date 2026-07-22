@@ -17,6 +17,11 @@ export interface IDocumentRepository {
   saveDocument(document: CreateDocumentInput): Promise<Document>;
 
   /**
+   * Update a document's fields by ID
+   */
+  updateDocument(id: DocumentId, updates: Record<string, any>): Promise<Document>;
+
+  /**
    * Update a document's metadata specifically
    */
   updateMetadata(id: DocumentId, metadata: any): Promise<void>;

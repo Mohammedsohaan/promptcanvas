@@ -97,6 +97,22 @@ export class SupabaseDocumentRepository implements IDocumentRepository {
     return this.mapRowToDocument(data);
   }
 
+  async updateDocument(id: DocumentId, updates: Record<string, any>, client?: SupabaseClient): Promise<Document> {
+    const supabase = this.getClient(client);
+    const { data, error } = await supabase
+      .from("documents")
+      .update(updates)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error || !data) {
+      throw new Error(`Failed to update document: ${error?.message}`);
+    }
+
+    return this.mapRowToDocument(data);
+  }
+
   async updateMetadata(id: DocumentId, metadata: any, client?: SupabaseClient): Promise<void> {
     const supabase = this.getClient(client);
     const { error } = await supabase
