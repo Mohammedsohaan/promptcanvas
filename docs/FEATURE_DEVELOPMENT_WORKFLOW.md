@@ -98,6 +98,6 @@ Every major feature should update the following as necessary:
 
 Every feature should answer one question:
 
-*"Does this make planning software easier?"*
+_"Does this make planning software easier?"_
 
 If the answer is no, reconsider implementing it.

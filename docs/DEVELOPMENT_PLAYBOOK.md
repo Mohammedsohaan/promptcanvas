@@ -4,7 +4,7 @@ This document serves as the master engineering handbook for PromptCanvas. It con
 
 ## Mission
 
-PromptCanvas exists to help people transform software ideas into structured product blueprints before writing code. 
+PromptCanvas exists to help people transform software ideas into structured product blueprints before writing code.
 
 Every single engineering, product, and design decision made by this team must relentlessly support this mission.
 
@@ -68,9 +68,10 @@ Motion must never distract users. Motion should always communicate product meani
 
 ## Product Philosophy
 
-To build a great product, we must clearly define what we are *not* building. 
+To build a great product, we must clearly define what we are _not_ building.
 
 PromptCanvas is:
+
 - not a chatbot
 - not a project manager
 - not a code editor

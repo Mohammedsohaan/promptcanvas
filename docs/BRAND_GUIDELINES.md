@@ -14,7 +14,7 @@ PromptCanvas is a software planning platform, not a code editor, project managem
 
 ## Color System
 
-The PromptCanvas palette is highly restrained to maintain a calm, focused environment. 
+The PromptCanvas palette is highly restrained to maintain a calm, focused environment.
 
 - **Background:** Deep, immersive dark tones that reduce eye strain during long planning sessions.
 - **Surface:** Slightly elevated from the background to distinguish interactive or grouped areas without sharp contrast.

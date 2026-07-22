@@ -41,7 +41,7 @@ Components are categorized by their responsibility to prevent tight coupling and
 
 ## Routing Architecture
 
-Our routing structure is flat, semantic, and highly predictable. 
+Our routing structure is flat, semantic, and highly predictable.
 
 - `/`
   **Landing Page.** Unauthenticated public entry point.

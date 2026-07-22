@@ -11,6 +11,8 @@ export enum DocumentType {
   USER_STORIES = "USER_STORIES",
   TEST_CASES = "TEST_CASES",
   SPRINT_PLAN = "SPRINT_PLAN",
+  PULL_REQUEST = "PULL_REQUEST",
+  COMMIT = "COMMIT",
 }
 
 export enum DocumentStatus {

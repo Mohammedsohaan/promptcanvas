@@ -63,11 +63,11 @@ The data structure relies on a strict, hierarchical relational model:
 
 **One User**  
 ↓  
-**Many Products**  
+**Many Products**
 
 **Each Product**  
 ↓  
-**One Blueprint**  
+**One Blueprint**
 
 ## Version 1 Constraints
 

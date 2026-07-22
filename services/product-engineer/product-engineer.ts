@@ -2,6 +2,7 @@ import { ProjectId } from "@/types/document";
 import { CopilotMode, StreamingChunk } from "@/types/ai";
 import { IntentPlanner } from "./intent-planner";
 import { CapabilityPlanner } from "./capability-planner";
+import { WorkflowRegistry } from "../core/workflow-registry";
 import { WorkflowEngine } from "./workflow-engine";
 import { WorkflowPlan } from "./types";
 import { copilotEngine } from "../copilot-engine";
@@ -15,12 +16,12 @@ export interface ProductEngineerRequest {
 
 /**
  * ProductEngineerService serves as the autonomous AI Product Engineer interface.
- * It plans intents, selects capabilities, coordinates workflow engines, and delegates
- * execution to existing Copilot and Document Generator services.
+ * Refactored in v3.0.1 to act as a pure orchestrator utilizing plugin registries.
  */
 export class ProductEngineerService {
   public static async planWorkflow(userPrompt: string): Promise<WorkflowPlan> {
     const intent = IntentPlanner.classify(userPrompt);
+    // Backward compatibility wrapper which now routes via IntentResolver
     return CapabilityPlanner.plan(userPrompt, intent);
   }
 
@@ -36,7 +37,10 @@ export class ProductEngineerService {
       onPlanCreated(plan);
     }
 
-    // 2. Instantiate workflow engine and run capability plan
+    // 2. Discover and execute workflow dynamically
+    // In full plugin architecture, we'd lookup the workflow in WorkflowRegistry by plan intent.
+    // For backward compatibility, we execute the plan via our default WorkflowEngine which 
+    // itself discovers capability steps via the CapabilityRegistry.
     const engine = new WorkflowEngine(plan);
     await engine.executeWorkflow();
 
@@ -46,7 +50,7 @@ export class ProductEngineerService {
     else if (plan.intent === "planning") copilotMode = CopilotMode.RELEASE;
     else if (plan.intent === "repository_analysis") copilotMode = CopilotMode.IMPLEMENTATION;
 
-    // 4. Delegate to CopilotEngine for streaming response reusing Hybrid Retrieval
+    // 4. Delegate to CopilotEngine for streaming response
     const stream = copilotEngine.streamConversation({
       projectId,
       question: prompt,

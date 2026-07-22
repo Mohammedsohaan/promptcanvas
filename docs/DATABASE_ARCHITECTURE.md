@@ -54,7 +54,7 @@ The Version 1 database structure enforces a strictly hierarchical, single-direct
 
 **One User**  
 ↓  
-**Many Products**  
+**Many Products**
 
 Products belong to exactly one user. Shared ownership is explicitly unsupported in this iteration.
 
@@ -74,7 +74,7 @@ To maintain velocity and system stability, several concepts have been intentiona
 
 ## Security Philosophy
 
-Security is uncompromising. Every user must only be able to query, view, and mutate their own products. 
+Security is uncompromising. Every user must only be able to query, view, and mutate their own products.
 
 This will be strictly enforced at the database level using **Row Level Security (RLS)**. Even if an application vulnerability exists, the database engine will reject any query attempting to read or write a `Products` record where the `owner_id` does not match the authenticated user's session token.
 

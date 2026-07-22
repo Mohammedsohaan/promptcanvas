@@ -9,6 +9,10 @@ import { WorkspaceLayout } from "@/components/workspace/workspace-layout";
 import { ProjectWorkspaceHeader } from "@/components/workspace/project-workspace-header";
 import { ProjectMetadataPanel } from "@/components/workspace/project-metadata-panel";
 import { DocumentList } from "@/components/workspace/document-list";
+import { RemediationPanel } from "@/components/workspace/remediation-panel";
+import { CompliancePanel } from "@/components/workspace/compliance-panel";
+import { EngineeringManagerPanel } from "@/components/workspace/engineering-manager-panel";
+import { ExecutionPanel } from "@/components/workspace/execution-panel";
 import { Project } from "@/services/projects";
 import { Document, createDocument } from "@/services/documents";
 
@@ -74,6 +78,18 @@ export function ProjectWorkspaceContent({ project, documents }: ProjectWorkspace
         </div>
 
         <DocumentList projectId={project.id} documents={documents} />
+
+        {/* Remediation Panel stub */}
+        <RemediationPanel context={null} />
+
+        {/* Compliance Panel stub */}
+        <CompliancePanel context={null} />
+
+        {/* Engineering Manager Panel stub */}
+        <EngineeringManagerPanel context={null} />
+
+        {/* Execution Panel stub */}
+        <ExecutionPanel context={null} />
       </motion.div>
     </WorkspaceLayout>
   );

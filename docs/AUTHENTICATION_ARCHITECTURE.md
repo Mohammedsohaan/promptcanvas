@@ -100,6 +100,7 @@ The authentication architecture is governed by the following unyielding principl
 To ensure rapid, secure delivery, Version 1 scope is strictly constrained.
 
 **Version 1 explicitly includes:**
+
 - Email/password authentication
 - Sign Up
 - Login
@@ -107,6 +108,7 @@ To ensure rapid, secure delivery, Version 1 scope is strictly constrained.
 - Protected routes
 
 **Version 1 explicitly excludes:**
+
 - Google Login (OAuth)
 - GitHub Login (OAuth)
 - Magic Links

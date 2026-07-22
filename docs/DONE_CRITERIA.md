@@ -2,7 +2,7 @@
 
 ## Purpose
 
-A feature is considered complete only when it satisfies engineering, design, testing, documentation, accessibility, and performance requirements. 
+A feature is considered complete only when it satisfies engineering, design, testing, documentation, accessibility, and performance requirements.
 
 Completion is based on quality rather than speed.
 
@@ -81,7 +81,7 @@ Before every commit:
 
 Before marking a feature as complete, ask:
 
-*"Would I confidently demo this feature to a recruiter, a client, or a teammate?"*
+_"Would I confidently demo this feature to a recruiter, a client, or a teammate?"_
 
 If the answer is no, continue improving it.
 

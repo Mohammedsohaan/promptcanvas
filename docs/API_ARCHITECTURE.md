@@ -16,9 +16,9 @@ PromptCanvas should expose only the minimum API surface required to support Vers
 
 ### Authentication
 
-Authentication is handled entirely by Supabase via their managed infrastructure and client libraries. 
+Authentication is handled entirely by Supabase via their managed infrastructure and client libraries.
 
-**There are NO custom authentication endpoints.** 
+**There are NO custom authentication endpoints.**
 
 Attempting to reinvent login flows introduces unnecessary security risks and maintenance burdens. All token issuance, refresh cycles, and session validations are delegated securely.
 
@@ -28,7 +28,7 @@ The core entity managed by the API is the Product.
 
 - **`GET /products`**
   Retrieves a paginated or filtered list of products owned by the authenticated user. Excludes heavy payload fields (like the compiled blueprint) to ensure rapid dashboard loading.
-  
+
 - **`GET /products/:id`**
   Retrieves the complete data payload for a specific product, including wizard state and the generated blueprint. Used to populate the Product Workspace.
 
@@ -55,6 +55,7 @@ The intelligent assembly of a product's architecture is handled via a dedicated 
 All API responses enforce a strict, uniform envelope. Consistency matters because it allows frontend clients to implement global, generalized fetch wrappers, drastically reducing boilerplate error handling code.
 
 **Success Payload:**
+
 ```json
 {
   "success": true,
@@ -63,6 +64,7 @@ All API responses enforce a strict, uniform envelope. Consistency matters becaus
 ```
 
 **Failure Payload:**
+
 ```json
 {
   "success": false,
@@ -103,7 +105,7 @@ Security rules are unapologetically strict:
 
 - **Only authenticated users:** Anonymous requests to the API are immediately rejected.
 - **Only owners can modify products:** Every single database query must include a strict `WHERE owner_id = :user_id` clause.
-- **Never expose another user's data:** Data bleed between accounts is the ultimate failure state. 
+- **Never expose another user's data:** Data bleed between accounts is the ultimate failure state.
 - **Always validate ownership:** Never trust a client-provided `user_id` payload; always extract identity strictly from the verified JWT session token.
 
 ## Future API

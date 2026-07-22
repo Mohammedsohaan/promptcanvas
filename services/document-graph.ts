@@ -125,4 +125,38 @@ export class DocumentGraph {
     
     return this.getChildren(parent.id).filter(child => child.id !== documentId);
   }
+
+  public getTraceabilityReport(documentId: DocumentId): {
+    implementedRequirements: Document[];
+    missingDownstreamWork: string[];
+    partialImplementations: Document[];
+  } {
+    const ancestors = this.getAncestors(documentId);
+    const descendants = this.getDescendants(documentId);
+    const lineage = [...ancestors, ...descendants];
+    
+    const implementedRequirements = lineage.filter(d => d.type === "PRD" || d.type === "USER_STORIES");
+    const missingDownstreamWork: string[] = [];
+    const partialImplementations: Document[] = [];
+
+    // Analyze lineage completeness
+    const hasAPI = lineage.some(d => d.type === "API_SPEC");
+    const hasDB = lineage.some(d => d.type === "DATABASE_SCHEMA");
+    const hasTests = lineage.some(d => d.type === "TEST_CASES");
+
+    if (implementedRequirements.length > 0) {
+      if (!hasAPI && !hasDB) missingDownstreamWork.push("Implementation Specs (API/DB)");
+      if (!hasTests) missingDownstreamWork.push("Test Cases");
+      
+      if (!hasTests || (!hasAPI && !hasDB)) {
+        partialImplementations.push(...implementedRequirements);
+      }
+    }
+
+    return {
+      implementedRequirements,
+      missingDownstreamWork,
+      partialImplementations
+    };
+  }
 }

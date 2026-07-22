@@ -96,6 +96,7 @@ Our software must be universally usable.
 Commit messages should strictly follow Conventional Commits to maintain an automatable history.
 
 Examples:
+
 - `feat:` A new feature.
 - `fix:` A bug fix.
 - `refactor:` Code changes that neither fix a bug nor add a feature.
@@ -104,7 +105,7 @@ Examples:
 - `test:` Adding missing tests or correcting existing ones.
 - `chore:` Changes to the build process or auxiliary tools.
 
-**Mandatory Rule:** Every commit should leave the project in a working state. 
+**Mandatory Rule:** Every commit should leave the project in a working state.
 
 ## Code Reviews
 
@@ -121,4 +122,4 @@ Every new feature should be rigorously reviewed for:
 
 Avoid clever code. Prefer obvious code.
 
-*Every feature should make the application easier to understand, easier to maintain, and easier to extend.*
+_Every feature should make the application easier to understand, easier to maintain, and easier to extend._

@@ -18,15 +18,15 @@ Every new feature should feel like a natural extension of the existing applicati
 Consistent naming conventions ensure predictability when navigating the codebase.
 
 - **Components:** `PascalCase`.
-  *Example:* `ProductCard.tsx`
+  _Example:_ `ProductCard.tsx`
 - **Hooks:** `camelCase`, prefixed with "use".
-  *Example:* `useProducts.ts`
+  _Example:_ `useProducts.ts`
 - **Utilities:** `camelCase`.
-  *Example:* `formatDate.ts`
+  _Example:_ `formatDate.ts`
 - **Pages:** Strict Next.js App Router conventions.
-  *Examples:* `page.tsx`, `layout.tsx`, `loading.tsx`
+  _Examples:_ `page.tsx`, `layout.tsx`, `loading.tsx`
 - **Constants:** `UPPER_SNAKE_CASE`.
-  *Example:* `MAX_API_RETRIES`
+  _Example:_ `MAX_API_RETRIES`
 
 ## Component Rules
 
@@ -64,6 +64,7 @@ To prevent any folder from becoming a disorganized dumping ground, responsibilit
 Animations must never be used solely for decoration. Motion should always communicate meaning and guide the user's attention.
 
 Examples of valid motion:
+
 - page transitions
 - workflow progression
 - loading
@@ -95,7 +96,7 @@ To maintain a pristine repository, each feature should strictly follow this life
 
 ## Versioning
 
-**Version 1 Goals:** Deliver the tightest, most focused single-player product planning experience possible. 
+**Version 1 Goals:** Deliver the tightest, most focused single-player product planning experience possible.
 
 Future versions should extend functionality without breaking existing behavior.
 
@@ -103,4 +104,4 @@ Future versions should extend functionality without breaking existing behavior.
 
 Whenever a design or technical decision is unclear, fall back on our singular guiding principle:
 
-*We build software that helps people think before they build software.*
+_We build software that helps people think before they build software._

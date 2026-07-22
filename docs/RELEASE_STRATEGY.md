@@ -68,16 +68,19 @@ Version 1 utilizes a serverless architecture designed for rapid iteration and hi
 Future releases should build upon the Version 1 foundation rather than replacing it, iteratively adding complexity only when the core is demonstrably stable.
 
 **Version 2**
+
 - AI Assistance
 - Templates
 - Collaboration
 
 **Version 3**
+
 - Teams
 - Comments
 - Version History
 
 **Version 4**
+
 - Enterprise Features
 - API Integrations
 - Plugins

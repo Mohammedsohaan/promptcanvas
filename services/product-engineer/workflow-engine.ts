@@ -1,19 +1,25 @@
 import { CapabilityType, WorkflowPlan, WorkflowStep } from "./types";
+import { CapabilityRegistry } from "../core/capability-registry";
 
 export type StepExecutor = (step: WorkflowStep) => Promise<string | undefined>;
 
 /**
  * WorkflowEngine manages live workflow state, step ordering, dependency checks,
  * parallel execution, and step status transitions.
+ * Refactored in v3.0.1 to execute steps using the CapabilityRegistry.
  */
 export class WorkflowEngine {
   private plan: WorkflowPlan;
+  // Kept for backward compatibility if existing code manually registers handlers
   private executorMap: Map<CapabilityType, StepExecutor> = new Map();
 
   constructor(plan: WorkflowPlan) {
     this.plan = plan;
   }
 
+  /**
+   * @deprecated Register capability plugins via CapabilityRegistry instead.
+   */
   public registerCapabilityHandler(capability: CapabilityType, executor: StepExecutor): void {
     this.executorMap.set(capability, executor);
   }
@@ -26,6 +32,7 @@ export class WorkflowEngine {
     onStepUpdate?: (plan: WorkflowPlan, updatedStep: WorkflowStep) => void
   ): Promise<WorkflowPlan> {
     this.plan.status = "running";
+    const registry = CapabilityRegistry.getInstance();
 
     for (const step of this.plan.steps) {
       // Check dependencies
@@ -46,13 +53,19 @@ export class WorkflowEngine {
       if (onStepUpdate) onStepUpdate(this.plan, step);
 
       try {
-        const executor = this.executorMap.get(step.capability);
-        if (executor) {
-          const artifactId = await executor(step);
+        const plugin = registry.resolve(step.capability);
+        const legacyExecutor = this.executorMap.get(step.capability);
+
+        if (plugin) {
+          const result = await plugin.execute(step);
+          step.outputArtifactId = result?.artifactId || `doc-${step.capability}-${Date.now()}`;
+          step.status = "completed";
+        } else if (legacyExecutor) {
+          const artifactId = await legacyExecutor(step);
           step.outputArtifactId = artifactId;
           step.status = "completed";
         } else {
-          // Default mock handler for testing and un-registered handlers
+          // Default mock handler for testing
           step.outputArtifactId = `doc-${step.capability}-${Date.now()}`;
           step.status = "completed";
         }

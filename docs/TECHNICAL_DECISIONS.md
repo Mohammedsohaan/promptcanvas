@@ -2,9 +2,9 @@
 
 ## Purpose
 
-This document records every major technical decision made during the development of PromptCanvas, functioning as the project's Architecture Decision Record (ADR). 
+This document records every major technical decision made during the development of PromptCanvas, functioning as the project's Architecture Decision Record (ADR).
 
-Future contributors must understand not only *what* technology was chosen, but *why* it was chosen. Every record includes the decision, the primary reasoning, alternatives considered, and acknowledged trade-offs.
+Future contributors must understand not only _what_ technology was chosen, but _why_ it was chosen. Every record includes the decision, the primary reasoning, alternatives considered, and acknowledged trade-offs.
 
 ---
 
@@ -19,6 +19,7 @@ Next.js App Router
 The App Router paradigm inherently supports React Server Components, allowing us to push heavy logic and data fetching to the server, resulting in drastically smaller client bundles. This ensures the application remains highly performant and scalable.
 
 **Alternatives Considered:**
+
 - Pages Router
 - Remix
 - Nuxt
@@ -39,6 +40,7 @@ TypeScript
 Strict type safety eliminates an entire class of runtime errors before the code is even compiled. It acts as executable documentation, ensuring APIs and component contracts are predictable. This drastically improves maintainability for growing teams.
 
 **Alternatives Considered:**
+
 - JavaScript
 
 **Trade-offs:**
@@ -57,6 +59,7 @@ Tailwind CSS
 Utility-first styling forces consistency by binding developers to a rigid design token scale (spacing, typography, colors). It accelerates development speed and guarantees zero unused CSS in the production bundle.
 
 **Alternatives Considered:**
+
 - CSS Modules
 - Styled Components
 - Emotion
@@ -77,6 +80,7 @@ Framer Motion
 Framer Motion provides production-quality physics-based animations with an exceptional developer experience. It handles complex orchestration gracefully, which is essential for our purposeful motion principles.
 
 **Alternatives Considered:**
+
 - Vanilla CSS Transitions
 - React Spring
 
@@ -96,6 +100,7 @@ Lucide React
 Lucide provides a highly consistent, modern, open-source icon set. It supports tree shaking natively, ensuring we only ship the exact SVG paths we use in our application.
 
 **Alternatives Considered:**
+
 - Heroicons
 - FontAwesome
 
@@ -115,6 +120,7 @@ Supabase Auth
 Supabase provides a deeply integrated, secure, and production-ready authentication layer out of the box. By tying identity directly into our built-in PostgreSQL database, we can natively utilize Row Level Security (RLS) to enforce data privacy at the query engine level.
 
 **Alternatives Considered:**
+
 - NextAuth
 - Firebase Auth
 - Auth0
@@ -135,6 +141,7 @@ Supabase PostgreSQL
 Relational data is the correct paradigm for structured software planning. PostgreSQL is the industry standard for scalable, resilient, production-ready SQL databases.
 
 **Alternatives Considered:**
+
 - MongoDB
 - PlanetScale
 
@@ -154,6 +161,7 @@ Vercel
 Vercel is the creator of Next.js, ensuring zero-configuration, perfectly optimized native Next.js support. It provides exceptionally fast preview deployments for pull requests and a robust edge network.
 
 **Alternatives Considered:**
+
 - AWS / GCP (Docker)
 - Netlify
 
@@ -173,6 +181,7 @@ Documentation-first development.
 Code is the byproduct of architectural thinking, not the origin. By rigidly planning architectures, data models, and API surfaces in markdown before implementation, we prevent expensive rewrites, clarify intent, and guarantee long-term maintainability for future contributors.
 
 **Alternatives Considered:**
+
 - Agile / Code-First
 
 **Trade-offs:**
@@ -194,7 +203,7 @@ This is the immutable truth of the platform. Every design choice, from the muted
 
 ## Future Decisions
 
-*This section is reserved for recording future architectural decisions as the application scales past Version 1.*
+_This section is reserved for recording future architectural decisions as the application scales past Version 1._
 
 - AI Integration
 - Templates
@@ -205,4 +214,4 @@ This is the immutable truth of the platform. Every design choice, from the muted
 
 ---
 
-*Every major technical decision should be documented before implementation whenever practical.*
+_Every major technical decision should be documented before implementation whenever practical._
