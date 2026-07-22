@@ -53,7 +53,7 @@ export function ProductEngineerPanel({ project, documents }: ProductEngineerPane
       );
 
       for await (const chunk of streamGenerator) {
-        if (chunk.type === "text") {
+        if (chunk.text) {
           streamText += chunk.text;
         }
       }

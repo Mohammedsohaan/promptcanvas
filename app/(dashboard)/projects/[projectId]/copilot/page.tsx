@@ -27,7 +27,8 @@ export default async function CopilotPage({ params }: CopilotPageProps) {
   }
 
   const documentsResult = await getDocuments(projectId, supabase);
-  const documents = documentsResult.data || [];
+  const documents = (documentsResult.data || []) as unknown as import("@/types/document").Document[];
 
   return <CopilotWorkspace project={projectResult.data} documents={documents} />;
 }
+

@@ -26,7 +26,7 @@ export async function generatePRD(request: AIJobRequest): Promise<AIResponse> {
 }
 
 export async function generateUserStories(request: AIJobRequest): Promise<AIResponse> {
-  const prompt = buildUserStoriesPrompt(request.context);
+  const prompt = buildUserStoriesPrompt(request.context as any);
   return generateContent({
     prompt,
     provider: request.provider,
@@ -35,7 +35,7 @@ export async function generateUserStories(request: AIJobRequest): Promise<AIResp
 }
 
 export async function generateApiSpec(request: AIJobRequest): Promise<AIResponse> {
-  const prompt = buildApiSpecPrompt(request.context);
+  const prompt = buildApiSpecPrompt(request.context as any);
   return generateContent({
     prompt,
     provider: request.provider,
@@ -44,7 +44,7 @@ export async function generateApiSpec(request: AIJobRequest): Promise<AIResponse
 }
 
 export async function generateDatabaseSchema(request: AIJobRequest): Promise<AIResponse> {
-  const prompt = buildDatabaseSchemaPrompt(request.context);
+  const prompt = buildDatabaseSchemaPrompt(request.context as any);
   return generateContent({
     prompt,
     provider: request.provider,
@@ -109,8 +109,8 @@ export async function* streamGeneration(
       break;
     case "test_cases":
       prompt = buildTestCasesPrompt({
-        parentDocumentTitle: aiContext.parentDocument?.title || aiContext.currentDocument.title,
-        parentDocumentType: aiContext.parentDocument?.type || aiContext.currentDocument.type,
+        parentDocumentTitle: aiContext.parent?.title || aiContext.currentDocument.title,
+        parentDocumentType: aiContext.parent?.type || aiContext.currentDocument.type,
         parentDocumentContent:
           typeof aiContext.currentDocument.content === "string"
             ? aiContext.currentDocument.content

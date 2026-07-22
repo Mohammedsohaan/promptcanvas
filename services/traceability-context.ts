@@ -86,7 +86,7 @@ export class TraceabilityContextService {
 
       const children = graph.getChildren(prdItem.id);
       const storyDocs = children.filter(
-        (c) => c.type === DocumentType.USER_STORIES || c.type === "USER_STORIES"
+        (c) => c.type === DocumentType.USER_STORIES || (c.type as string) === "USER_STORIES"
       );
 
       if (storyDocs.length === 0) {
@@ -121,7 +121,7 @@ export class TraceabilityContextService {
 
           const storyChildren = graph.getChildren(storyDoc.id);
           const apiDocs = storyChildren.filter(
-            (c) => c.type === DocumentType.API_SPEC || c.type === "API_SPEC"
+            (c) => c.type === DocumentType.API_SPEC || (c.type as string) === "API_SPEC"
           );
 
           if (apiDocs.length === 0) {
@@ -156,7 +156,7 @@ export class TraceabilityContextService {
 
               const apiChildren = graph.getChildren(apiDoc.id);
               const dbDocs = apiChildren.filter(
-                (c) => c.type === DocumentType.DATABASE_SCHEMA || c.type === "DATABASE_SCHEMA"
+                (c) => c.type === DocumentType.DATABASE_SCHEMA || (c.type as string) === "DATABASE_SCHEMA"
               );
 
               if (dbDocs.length === 0) {
@@ -191,7 +191,7 @@ export class TraceabilityContextService {
 
                   const dbChildren = graph.getChildren(dbDoc.id);
                   const testDocs = dbChildren.filter(
-                    (c) => c.type === DocumentType.TEST_CASES || c.type === "TEST_CASES"
+                    (c) => c.type === DocumentType.TEST_CASES || (c.type as string) === "TEST_CASES"
                   );
 
                   if (testDocs.length === 0) {

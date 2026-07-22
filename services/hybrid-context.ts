@@ -53,7 +53,7 @@ export class HybridContextSelector implements RetrievalStrategy {
       score += simScore * 0.4;
 
       // Document Freshness bonus (10%)
-      if (doc.freshness === DocumentFreshness.UP_TO_DATE || doc.freshness === "UP_TO_DATE") {
+      if (doc.freshness === DocumentFreshness.UP_TO_DATE || (doc.freshness as string) === "UP_TO_DATE") {
         score += 0.1;
       }
 

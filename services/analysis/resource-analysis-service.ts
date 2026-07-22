@@ -6,7 +6,7 @@ export class ResourceAnalysisService {
     const analysis = {
       totalResources: resources.length,
       idleResources: resources.filter(r => r.status === "idle"),
-      unusedVolumes: resources.filter(r => r.type === "Volume" && r.status === "available"),
+      unusedVolumes: resources.filter(r => r.type === "Volume" && (r.status as string) === "available"),
       unusedSnapshots: resources.filter(r => r.type === "Snapshot" && r.tags?.unused === "true"),
       unusedLoadBalancers: resources.filter(r => r.type === "LoadBalancer" && r.status === "idle"),
       cpuUsagePercentage: 45,

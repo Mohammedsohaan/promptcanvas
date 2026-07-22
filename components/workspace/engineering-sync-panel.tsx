@@ -9,7 +9,7 @@ import { ExternalReference, SyncPlatform } from "@/services/integration/connecto
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { GitBranch, ExternalLink, RefreshCw, CheckCircle2, AlertTriangle, Layers, Github } from "lucide-react";
+import { GitBranch, ExternalLink, RefreshCw, CheckCircle2, AlertTriangle, Layers } from "lucide-react";
 import { toast } from "sonner";
 
 interface EngineeringSyncPanelProps {
@@ -75,16 +75,16 @@ export function EngineeringSyncPanel({ project, documents }: EngineeringSyncPane
             <label className="text-xs text-neutral-400 block mb-1.5">Platform</label>
             <div className="flex items-center gap-2">
               <Button
-                variant={selectedPlatform === "github" ? "default" : "outline"}
+                variant={selectedPlatform === "github" ? "primary" : "secondary"}
                 size="sm"
                 onClick={() => setSelectedPlatform("github")}
                 className="flex-1 text-xs"
               >
-                <Github className="h-3.5 w-3.5 mr-1.5" />
+                <GitBranch className="h-3.5 w-3.5 mr-1.5" />
                 GitHub
               </Button>
               <Button
-                variant={selectedPlatform === "jira" ? "default" : "outline"}
+                variant={selectedPlatform === "jira" ? "primary" : "secondary"}
                 size="sm"
                 onClick={() => setSelectedPlatform("jira")}
                 className="flex-1 text-xs"
