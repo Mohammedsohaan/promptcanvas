@@ -2,6 +2,7 @@ import * as React from "react";
 import { createClient } from "@/lib/supabase/server";
 import { getProjectById } from "@/services/projects";
 import { getDocuments } from "@/services/documents";
+import { mapDbDocumentToDomain } from "@/types/document";
 import { notFound, redirect } from "next/navigation";
 import { ProjectWorkspaceContent } from "@/components/workspace/project-workspace-content";
 
@@ -32,7 +33,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   // Fetch documents for the project
   const documentsResult = await getDocuments(projectId, supabase);
-  const documents = documentsResult.data || [];
+  const documents = (documentsResult.data || []).map(mapDbDocumentToDomain);
 
   return <ProjectWorkspaceContent project={projectResult.data} documents={documents} />;
 }

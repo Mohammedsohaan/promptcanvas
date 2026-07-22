@@ -14,7 +14,8 @@ import { CompliancePanel } from "@/components/workspace/compliance-panel";
 import { EngineeringManagerPanel } from "@/components/workspace/engineering-manager-panel";
 import { ExecutionPanel } from "@/components/workspace/execution-panel";
 import { Project } from "@/services/projects";
-import { Document, createDocument } from "@/services/documents";
+import { createDocument } from "@/services/documents";
+import { Document } from "@/types/document";
 
 interface ProjectWorkspaceContentProps {
   project: Project;

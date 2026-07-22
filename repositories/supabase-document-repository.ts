@@ -1,6 +1,6 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { createClient as createBrowserClient } from "@/lib/supabase/client";
-import { Document, DocumentId, ProjectId } from "../types/document";
+import { Document, DocumentId, ProjectId, CreateDocumentInput } from "../types/document";
 import { IDocumentRepository } from "./document-repository";
 
 export class SupabaseDocumentRepository implements IDocumentRepository {
@@ -35,7 +35,7 @@ export class SupabaseDocumentRepository implements IDocumentRepository {
   /**
    * Helper to map a domain Document to a DB row
    */
-  private mapDocumentToRow(doc: Document): any {
+  private mapDocumentToRow(doc: CreateDocumentInput): any {
     const row: any = {
       project_id: doc.projectId,
       title: doc.title,
@@ -79,7 +79,7 @@ export class SupabaseDocumentRepository implements IDocumentRepository {
     return data.map(this.mapRowToDocument);
   }
 
-  async saveDocument(document: Document, client?: SupabaseClient): Promise<Document> {
+  async saveDocument(document: CreateDocumentInput, client?: SupabaseClient): Promise<Document> {
     const supabase = this.getClient(client);
     const row = this.mapDocumentToRow(document);
     

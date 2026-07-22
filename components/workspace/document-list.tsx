@@ -2,9 +2,8 @@
 
 import * as React from "react";
 import { FileText } from "lucide-react";
-import { Document } from "@/services/documents";
 import { DocumentListItem } from "@/components/workspace/document-list-item";
-import { DocumentFreshness, DocumentId } from "@/types/document";
+import { DocumentFreshness, DocumentId, Document } from "@/types/document";
 
 interface DocumentListProps {
   projectId: string;

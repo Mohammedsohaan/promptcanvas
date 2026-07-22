@@ -11,7 +11,7 @@ export type StepExecutor = (step: WorkflowStep) => Promise<string | undefined>;
 export class WorkflowEngine {
   private plan: WorkflowPlan;
   // Kept for backward compatibility if existing code manually registers handlers
-  private executorMap: Map<CapabilityType, StepExecutor> = new Map();
+  private executorMap: Map<string, StepExecutor> = new Map();
 
   constructor(plan: WorkflowPlan) {
     this.plan = plan;
@@ -20,7 +20,7 @@ export class WorkflowEngine {
   /**
    * @deprecated Register capability plugins via CapabilityRegistry instead.
    */
-  public registerCapabilityHandler(capability: CapabilityType, executor: StepExecutor): void {
+  public registerCapabilityHandler(capability: CapabilityType | string, executor: StepExecutor): void {
     this.executorMap.set(capability, executor);
   }
 

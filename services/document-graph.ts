@@ -13,7 +13,7 @@ export class DocumentGraph {
    * Constructs an immutable DocumentGraph from a collection of documents.
    * Internal state is never mutated after construction.
    */
-  constructor(documents: any[]) {
+  constructor(documents: Document[]) {
     this.documents = new Map();
     this.edges = new Map();
 

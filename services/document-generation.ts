@@ -1,4 +1,4 @@
-import { Document, DocumentType, DocumentStatus, DocumentId, ProjectId, incrementVersion } from "../types/document";
+import { Document, DocumentType, DocumentStatus, DocumentId, ProjectId, CreateDocumentInput, incrementVersion } from "../types/document";
 import { documentRepository } from "../repositories/supabase-document-repository";
 import { SupabaseClient } from "@supabase/supabase-js";
 
@@ -20,9 +20,8 @@ export class DocumentGenerationService {
     client?: SupabaseClient
   ): Promise<Document> {
     
-    // We construct a new Document model
-    const newDoc: Document = {
-      id: undefined as any, // DB will generate UUID, or we could generate one here
+    // Construct a CreateDocumentInput model where ID is assigned by database
+    const newDoc: CreateDocumentInput = {
       projectId: options.projectId,
       title: options.title,
       type: options.type,

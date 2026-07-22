@@ -3,7 +3,7 @@ import { createClient as createBrowserClient } from "@/lib/supabase/client";
 
 /* ─────────── Types ─────────── */
 
-export interface Document {
+export interface DbDocument {
   id: string;
   project_id: string;
   created_at: string;
@@ -43,7 +43,7 @@ export interface DocumentResult<T> {
 export async function createDocument(
   documentData: CreateDocumentData,
   supabaseClient?: SupabaseClient
-): Promise<DocumentResult<Document>> {
+): Promise<DocumentResult<DbDocument>> {
   const supabase = supabaseClient || createBrowserClient();
 
   const { data, error } = await supabase
@@ -68,7 +68,7 @@ export async function createDocument(
   return {
     success: true,
     message: "Document created successfully!",
-    data: data as Document,
+    data: data as DbDocument,
   };
 }
 
@@ -77,7 +77,7 @@ export async function createDocument(
 export async function getDocuments(
   projectId: string,
   supabaseClient?: SupabaseClient
-): Promise<DocumentResult<Document[]>> {
+): Promise<DocumentResult<DbDocument[]>> {
   const supabase = supabaseClient || createBrowserClient();
 
   const { data, error } = await supabase
@@ -97,7 +97,7 @@ export async function getDocuments(
   return {
     success: true,
     message: "Documents fetched successfully!",
-    data: data as Document[],
+    data: data as DbDocument[],
   };
 }
 
@@ -106,7 +106,7 @@ export async function getDocuments(
 export async function getDocumentById(
   documentId: string,
   supabaseClient?: SupabaseClient
-): Promise<DocumentResult<Document>> {
+): Promise<DocumentResult<DbDocument>> {
   const supabase = supabaseClient || createBrowserClient();
 
   const { data, error } = await supabase
@@ -125,7 +125,7 @@ export async function getDocumentById(
   return {
     success: true,
     message: "Document fetched successfully!",
-    data: data as Document,
+    data: data as DbDocument,
   };
 }
 
@@ -135,7 +135,7 @@ export async function updateDocument(
   documentId: string,
   updates: UpdateDocumentData,
   supabaseClient?: SupabaseClient
-): Promise<DocumentResult<Document>> {
+): Promise<DocumentResult<DbDocument>> {
   const supabase = supabaseClient || createBrowserClient();
 
   const { data, error } = await supabase
@@ -155,7 +155,7 @@ export async function updateDocument(
   return {
     success: true,
     message: "Document updated successfully!",
-    data: data as Document,
+    data: data as DbDocument,
   };
 }
 

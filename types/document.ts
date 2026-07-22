@@ -61,6 +61,8 @@ export interface Document {
   metadata?: DocumentMetadata;
 }
 
+export type CreateDocumentInput = Omit<Document, "id"> & { id?: DocumentId };
+
 export function incrementVersion(version: DocumentVersion): DocumentVersion {
   return version + 1;
 }
@@ -69,7 +71,9 @@ export function resetVersion(): DocumentVersion {
   return 1;
 }
 
-export function mapDbDocumentToDomain(doc: any): Document {
+import type { DbDocument } from "@/services/documents";
+
+export function mapDbDocumentToDomain(doc: DbDocument | any): Document {
   if (!doc) return doc;
   return {
     id: doc.id,

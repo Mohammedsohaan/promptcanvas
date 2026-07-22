@@ -74,7 +74,7 @@ export class ConsistencyContextService {
         }
       } else {
         // Non-PRD / Non-Root document missing a parent
-        if (item.type !== DocumentType.PRD && (item.type as string) !== "PRD" && item.type !== DocumentType.CUSTOM) {
+        if (item.type !== DocumentType.PRD && item.type !== DocumentType.CUSTOM) {
           orphanDocuments.push({
             id: item.id,
             title: item.title,
@@ -85,10 +85,10 @@ export class ConsistencyContextService {
 
       // 4. Traceability Gaps & Flow Validation
       // PRD -> should have User Stories
-      if (item.type === DocumentType.PRD || (item.type as string) === "PRD") {
+      if (item.type === DocumentType.PRD) {
         const children = graph.getChildren(item.id);
         const hasUserStories = children.some(
-          (c) => c.type === DocumentType.USER_STORIES || (c.type as string) === "USER_STORIES"
+          (c) => c.type === DocumentType.USER_STORIES
         );
         if (!hasUserStories) {
           traceabilityGaps.push({
@@ -102,10 +102,10 @@ export class ConsistencyContextService {
       }
 
       // User Stories -> should have API Spec
-      if (item.type === DocumentType.USER_STORIES || (item.type as string) === "USER_STORIES") {
+      if (item.type === DocumentType.USER_STORIES) {
         const children = graph.getChildren(item.id);
         const hasApiSpec = children.some(
-          (c) => c.type === DocumentType.API_SPEC || (c.type as string) === "API_SPEC"
+          (c) => c.type === DocumentType.API_SPEC
         );
         if (!hasApiSpec) {
           traceabilityGaps.push({
@@ -119,10 +119,10 @@ export class ConsistencyContextService {
       }
 
       // API Spec -> should have Database Schema
-      if (item.type === DocumentType.API_SPEC || (item.type as string) === "API_SPEC") {
+      if (item.type === DocumentType.API_SPEC) {
         const children = graph.getChildren(item.id);
         const hasDbSchema = children.some(
-          (c) => c.type === DocumentType.DATABASE_SCHEMA || (c.type as string) === "DATABASE_SCHEMA"
+          (c) => c.type === DocumentType.DATABASE_SCHEMA
         );
         if (!hasDbSchema) {
           traceabilityGaps.push({

@@ -10,13 +10,13 @@ import { DocumentMetadataPanel } from "@/components/workspace/document-metadata-
 import { DocumentList } from "@/components/workspace/document-list";
 import { DocumentEditor, DocumentEditorRef } from "@/components/editor/editor";
 import { Project } from "@/services/projects";
-import { Document, createDocument } from "@/services/documents";
+import { createDocument } from "@/services/documents";
 import { AIPanel } from "@/components/ai/ai-panel";
 import { AIOrchestrator } from "@/services/ai-orchestrator";
 import { AIJobType } from "@/types/ai";
 import { StreamingState } from "@/types/editor";
 import { StreamingPreviewPanel } from "@/components/editor/streaming-preview-panel";
-import { DocumentRelationshipViewModel, DocumentType, DocumentId, DocumentFreshness } from "@/types/document";
+import { DocumentRelationshipViewModel, DocumentType, DocumentId, DocumentFreshness, Document } from "@/types/document";
 import { DocumentGenerationService } from "@/services/document-generation";
 import { DocumentGraph } from "@/services/document-graph";
 import { ImpactAnalysisService, AffectedDocument } from "@/services/impact-analysis";
@@ -50,21 +50,7 @@ export function DocumentEditorLayout({
   const graph = React.useMemo(() => new DocumentGraph(documents), [documents]);
   
   const freshnessMap = React.useMemo(
-    () => ImpactAnalysisService.computeFreshnessMap(
-      documents.map((d: any) => ({
-        ...d,
-        // Normalize snake_case fields for the service
-        projectId: d.project_id ?? d.projectId,
-        parentDocumentId: d.parent_document_id ?? d.parentDocumentId,
-        lastGeneratedAt: d.last_generated_at ?? d.lastGeneratedAt,
-        createdByAi: d.created_by_ai ?? d.createdByAi,
-        createdAt: d.created_at ?? d.createdAt,
-        updatedAt: d.updated_at ?? d.updatedAt,
-        isFavorite: d.is_favorite ?? d.isFavorite,
-        sortOrder: d.sort_order ?? d.sortOrder,
-      })),
-      graph
-    ),
+    () => ImpactAnalysisService.computeFreshnessMap(documents, graph),
     [documents, graph]
   );
 
@@ -226,7 +212,7 @@ export function DocumentEditorLayout({
         return {
           id: affected.document.id,
           title: affected.document.title,
-          type: affected.document.type as string,
+          type: affected.document.type,
         };
       })
       .filter(Boolean) as Array<{ id: DocumentId; title: string; type: string }>;

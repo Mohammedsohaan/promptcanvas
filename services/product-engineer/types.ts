@@ -24,7 +24,7 @@ export type StepStatus = "pending" | "running" | "completed" | "failed" | "skipp
 
 export interface WorkflowStep {
   id: string;
-  capability: CapabilityType;
+  capability: CapabilityType | string;
   description: string;
   status: StepStatus;
   dependsOn?: string[];

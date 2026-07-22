@@ -4,6 +4,6 @@ export interface CloudResource {
   type: string;
   provider: string;
   region: string;
-  status: "running" | "stopped" | "terminated" | "idle" | "unknown";
+  status: "running" | "stopped" | "terminated" | "idle" | "available" | "unknown";
   tags: Record<string, string>;
 }

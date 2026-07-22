@@ -6,7 +6,7 @@ import { Star, FileText, AlertTriangle } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Document } from "@/services/documents";
+import { Document } from "@/types/document";
 
 interface DocumentListItemProps {
   document: Document;
@@ -82,7 +82,7 @@ export function DocumentListItem({
             )}
           </div>
           <p className="text-xs text-neutral-500 mt-1">
-            Updated {formatDate(document.updated_at)}
+            Updated {formatDate(document.updatedAt)}
           </p>
         </div>
       </div>
@@ -91,7 +91,7 @@ export function DocumentListItem({
         <Star
           className={cn(
             "h-4 w-4 transition-colors",
-            document.is_favorite
+            document.isFavorite
               ? "fill-amber-400 text-amber-400"
               : "text-neutral-600 opacity-0 group-hover:opacity-100 hover:text-neutral-400"
           )}

@@ -2,6 +2,7 @@ import * as React from "react";
 import { createClient } from "@/lib/supabase/server";
 import { getProjectById } from "@/services/projects";
 import { getDocuments } from "@/services/documents";
+import { mapDbDocumentToDomain } from "@/types/document";
 import { notFound, redirect } from "next/navigation";
 import { CopilotWorkspace } from "@/components/copilot/copilot-workspace";
 
@@ -27,7 +28,7 @@ export default async function CopilotPage({ params }: CopilotPageProps) {
   }
 
   const documentsResult = await getDocuments(projectId, supabase);
-  const documents = (documentsResult.data || []) as unknown as import("@/types/document").Document[];
+  const documents = (documentsResult.data || []).map(mapDbDocumentToDomain);
 
   return <CopilotWorkspace project={projectResult.data} documents={documents} />;
 }

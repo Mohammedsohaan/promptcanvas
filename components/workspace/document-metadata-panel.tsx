@@ -6,8 +6,7 @@ import { Calendar, Tag, Star, Clock, AlertTriangle, RefreshCw, CheckCircle2, Cir
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Document } from "@/services/documents";
-import { DocumentRelationshipViewModel, DocumentId, DocumentFreshness } from "@/types/document";
+import { DocumentRelationshipViewModel, DocumentId, DocumentFreshness, Document } from "@/types/document";
 import { AffectedDocument } from "@/services/impact-analysis";
 import { RegenerationProgress } from "@/services/regeneration-manager";
 import { RegenerationStatus } from "@/types/document";
@@ -32,6 +31,7 @@ export function DocumentMetadataPanel({
   const [selectedIds, setSelectedIds] = React.useState<Set<DocumentId>>(new Set());
 
   const formatDate = (dateString: string) => {
+    if (!dateString) return "N/A";
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
@@ -72,12 +72,12 @@ export function DocumentMetadataPanel({
   const metadataItems = [
     {
       label: "Created",
-      value: formatDate(document.created_at),
+      value: formatDate(document.createdAt),
       icon: Calendar,
     },
     {
       label: "Last Updated",
-      value: formatDate(document.updated_at),
+      value: formatDate(document.updatedAt),
       icon: Clock,
     },
     {
@@ -95,13 +95,13 @@ export function DocumentMetadataPanel({
         <div className="flex items-center gap-1.5 text-sm">
           <Star
             className={`h-4 w-4 ${
-              document.is_favorite
+              document.isFavorite
                 ? "fill-amber-400 text-amber-400"
                 : "text-neutral-500"
             }`}
           />
           <span className="text-neutral-300">
-            {document.is_favorite ? "Starred" : "No"}
+            {document.isFavorite ? "Starred" : "No"}
           </span>
         </div>
       ),

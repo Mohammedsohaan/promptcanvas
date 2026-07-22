@@ -1,11 +1,12 @@
-import { PromptInput } from "./types";
+import { PromptInput, PromptContext } from "./types";
 
-export function buildDatabaseSchemaPrompt(input: PromptInput): string {
-  const { context } = input;
-  const currentDoc = context.currentDocument;
-  const content = currentDoc.content ? JSON.stringify(currentDoc.content) : "None provided.";
+export function buildDatabaseSchemaPrompt(input: PromptInput | PromptContext): string {
+  if ("context" in input) {
+    const { context } = input;
+    const currentDoc = context.currentDocument;
+    const content = currentDoc.content ? JSON.stringify(currentDoc.content) : "None provided.";
 
-  return `You are a Lead Database Architect. Generate a production-ready relational Database Schema Design based on the project context.
+    return `You are a Lead Database Architect. Generate a production-ready relational Database Schema Design based on the project context.
 
 Project Title: ${context.projectSummary || "Untitled Project"}
 Parent Document: ${context.parent?.title || "N/A"}
@@ -36,6 +37,21 @@ The generated document MUST include the following consistent sections in clean M
 10. Multi-tenancy Strategy: When appropriate.
 11. Normalization Notes: Explain normalization decisions.
 12. Assumptions: List assumptions made because of missing information.
+
+Generate the Database Schema Specification in markdown format.`;
+  }
+
+  return `You are a Lead Database Architect. Generate a production-ready relational Database Schema Design based on the project context.
+
+Project Title: ${input.projectTitle}
+Description: ${input.projectDescription || "N/A"}
+Document Title: ${input.documentTitle || "Database Schema"}
+
+Current Document Context (API Spec / User Stories / PRD):
+${input.documentContent || "None provided."}
+
+Additional Instructions:
+${input.additionalInstructions || "Include table definitions, column types, primary/foreign keys, and relationships."}
 
 Generate the Database Schema Specification in markdown format.`;
 }

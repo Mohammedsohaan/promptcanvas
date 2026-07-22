@@ -13,7 +13,7 @@ export class CapabilityPlanner {
 
     let steps: WorkflowStep[] = matchedCapabilities.map((cap, index) => ({
       id: `step-${index + 1}`,
-      capability: cap.id as any,
+      capability: cap.id,
       description: cap.name,
       status: "pending",
       dependsOn: index > 0 ? [`step-${index}`] : undefined,
@@ -36,7 +36,7 @@ export class CapabilityPlanner {
       if (needsPRD) {
         steps.push({
           id: `step-${stepIndex++}`,
-          capability: "generate_prd" as any,
+          capability: "generate_prd",
           description: "Generate Business Requirements (PRD)",
           status: "pending",
         });
@@ -46,7 +46,7 @@ export class CapabilityPlanner {
         const prevStepId = steps.length > 0 ? steps[steps.length - 1].id : undefined;
         steps.push({
           id: `step-${stepIndex++}`,
-          capability: "generate_stories" as any,
+          capability: "generate_stories",
           description: "Generate User Stories",
           status: "pending",
           dependsOn: prevStepId ? [prevStepId] : undefined,
@@ -57,7 +57,7 @@ export class CapabilityPlanner {
         const prevStepId = steps.length > 0 ? steps[steps.length - 1].id : undefined;
         steps.push({
           id: `step-${stepIndex++}`,
-          capability: "generate_api" as any,
+          capability: "generate_api",
           description: "Generate API Specification",
           status: "pending",
           dependsOn: prevStepId ? [prevStepId] : undefined,
@@ -68,7 +68,7 @@ export class CapabilityPlanner {
         const prevStepId = steps.length > 0 ? steps[steps.length - 1].id : undefined;
         steps.push({
           id: `step-${stepIndex++}`,
-          capability: "generate_schema" as any,
+          capability: "generate_schema",
           description: "Generate Database Schema",
           status: "pending",
           dependsOn: prevStepId ? [prevStepId] : undefined,
@@ -79,7 +79,7 @@ export class CapabilityPlanner {
         const prevStepId = steps.length > 0 ? steps[steps.length - 1].id : undefined;
         steps.push({
           id: `step-${stepIndex++}`,
-          capability: "generate_test_cases" as any,
+          capability: "generate_test_cases",
           description: "Generate AI Test Cases",
           status: "pending",
           dependsOn: prevStepId ? [prevStepId] : undefined,
@@ -90,7 +90,7 @@ export class CapabilityPlanner {
         const prevStepId = steps.length > 0 ? steps[steps.length - 1].id : undefined;
         steps.push({
           id: `step-${stepIndex++}`,
-          capability: "generate_sprint" as any,
+          capability: "generate_sprint",
           description: "Plan AI Sprint Backlog",
           status: "pending",
           dependsOn: prevStepId ? [prevStepId] : undefined,
@@ -101,7 +101,7 @@ export class CapabilityPlanner {
         const prevStepId = steps.length > 0 ? steps[steps.length - 1].id : undefined;
         steps.push({
           id: `step-${stepIndex++}`,
-          capability: "check_release" as any,
+          capability: "check_release",
           description: "Evaluate Release Readiness",
           status: "pending",
           dependsOn: prevStepId ? [prevStepId] : undefined,
@@ -112,7 +112,7 @@ export class CapabilityPlanner {
         const prevStepId = steps.length > 0 ? steps[steps.length - 1].id : undefined;
         steps.push({
           id: `step-${stepIndex++}`,
-          capability: "sync_engineering" as any,
+          capability: "sync_engineering",
           description: "Publish & Sync to Engineering Platforms (GitHub/Jira)",
           status: "pending",
           dependsOn: prevStepId ? [prevStepId] : undefined,
@@ -122,7 +122,7 @@ export class CapabilityPlanner {
       if (steps.length === 0) {
         steps.push({
           id: `step-${stepIndex++}`,
-          capability: "check_consistency" as any,
+          capability: "check_consistency",
           description: "Execute Comprehensive Consistency Review",
           status: "pending",
         });

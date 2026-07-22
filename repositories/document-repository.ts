@@ -1,4 +1,4 @@
-import { Document, DocumentId, ProjectId } from "../types/document";
+import { Document, DocumentId, ProjectId, CreateDocumentInput } from "../types/document";
 
 export interface IDocumentRepository {
   /**
@@ -14,7 +14,7 @@ export interface IDocumentRepository {
   /**
    * Save a new document or update an existing one
    */
-  saveDocument(document: Document): Promise<Document>;
+  saveDocument(document: CreateDocumentInput): Promise<Document>;
 
   /**
    * Update a document's metadata specifically

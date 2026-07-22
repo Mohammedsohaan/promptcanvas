@@ -5,7 +5,7 @@ import { getProjectById } from "@/services/projects";
 import { getDocumentById, getDocuments } from "@/services/documents";
 import { DocumentEditorLayout } from "@/components/workspace/document-editor-layout";
 import { DocumentGraph } from "@/services/document-graph";
-import { DocumentRelationshipViewModel } from "@/types/document";
+import { DocumentRelationshipViewModel, mapDbDocumentToDomain } from "@/types/document";
 
 interface DocumentPageProps {
   params: Promise<{
@@ -43,14 +43,13 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
     notFound();
   }
 
-  // 4. Fetch all documents for this project
+  // 4. Fetch all documents for this project and map to domain models
   const documentsResult = await getDocuments(projectId, supabase);
-  const documents = documentsResult.data || [];
+  const documents = (documentsResult.data || []).map(mapDbDocumentToDomain);
+  const document = mapDbDocumentToDomain(documentResult.data);
 
   // 5. Construct Graph and ViewModel
-  // Note: Here we are mapping from DB documents to Domain documents conceptually.
-  // For this milestone, we assume they are compatible or we cast them appropriately.
-  const graph = new DocumentGraph(documents as any);
+  const graph = new DocumentGraph(documents);
   
   const relationships: DocumentRelationshipViewModel = {
     parent: graph.getParent(documentId) || null,
@@ -63,7 +62,7 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
   return (
     <DocumentEditorLayout
       project={projectResult.data}
-      document={documentResult.data}
+      document={document}
       documents={documents}
       relationships={relationships}
     />

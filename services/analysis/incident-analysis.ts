@@ -5,8 +5,8 @@ import { PlatformEventBus } from "../core/platform-event-bus";
 export class IncidentAnalysisService {
   public analyze(runtime: RuntimeModel): IncidentAnalysis {
     const activeIncidents = runtime.incidents.filter(i => i.status !== "closed" && i.status !== "resolved");
-    const highestSeverity = activeIncidents.length > 0 
-      ? activeIncidents.sort((a, b) => a.severity.localeCompare(b.severity))[0].severity 
+    const highestSeverity: IncidentAnalysis["severity"] = activeIncidents.length > 0 
+      ? (activeIncidents.sort((a, b) => a.severity.localeCompare(b.severity))[0].severity as IncidentAnalysis["severity"])
       : "none";
     
     const affectedServices = new Set<string>();
@@ -18,7 +18,7 @@ export class IncidentAnalysisService {
       : "isolated"; // default
 
     const analysis: IncidentAnalysis = {
-      severity: highestSeverity as any,
+      severity: highestSeverity,
       affectedServices: Array.from(affectedServices),
       blastRadius,
       deploymentCorrelation: false, // Could cross reference deployment times with incident start times

@@ -7,7 +7,7 @@ import { ArrowLeft, FileText, AlertTriangle } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Document } from "@/services/documents";
+import { Document } from "@/types/document";
 
 interface DocumentHeaderProps {
   projectId: string;
@@ -26,6 +26,7 @@ export function DocumentHeader({ projectId, document, onOpenAIPanel, isOutdated 
     )[document.icon] || FileText;
 
   const formatDate = (dateString: string) => {
+    if (!dateString) return "N/A";
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
@@ -73,7 +74,7 @@ export function DocumentHeader({ projectId, document, onOpenAIPanel, isOutdated 
               )}
             </div>
             <p className="text-xs text-neutral-500 mt-1">
-              Last saved {formatDate(document.updated_at)}
+              Last saved {formatDate(document.updatedAt)}
             </p>
           </div>
         </div>
